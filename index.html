@@ -1,20 +1,543 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-  <meta name="viewport" content="height=device-height, initial-scale=1.0, user-scalable=0" />
-  <!-- for Full Screen -->
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <meta name="format-detection" content="telephone=no" />
-  <meta charset="UTF-8" />
-  <title>Ankush Kumar Singh</title>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ankush Kumar Singh | Tech Lead at SplashLearn</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
-
 <body>
-<a href="https://www.linkedin.com/in/ankushsingh/">Ankush Kumar Singh</a>
-<div style="margin-bottom:5px"> <strong> <a href="https://www.slideshare.net/secret/uO83oa45PcTwmd" title="CtCI v6 - Content removed from Indian Edition" target="_blank">CtCI v6 - Content removed from Indian Edition</a> </strong> from <strong><a href="//www.slideshare.net/gayle2" target="_blank">Gayle McDowell</a></strong> </div>
-</body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-content">
+            <div class="logo">Ankush</div>
+            <ul class="nav-links">
+                <li><a href="#about">About</a></li>
+                <li><a href="#experience">Experience</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#contact" class="button">Contact</a></li>
+            </ul>
+            <div class="menu-toggle">
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </div>
+        </div>
+    </nav>
 
+    <!-- Hero Section -->
+    <header class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">Ankush Kumar Singh</h1>
+            <h2 class="hero-subtitle">Tech Lead at SplashLearn</h2>
+            <p class="hero-description">Problem Solver. Technology Enthusiast. Analytical Thinker. Ex-Utopia. Ex-Citibank. Ex-Infosys. IIT Roorkee (CS).</p>
+            <div class="hero-cta">
+                <a href="#contact" class="button primary">Get in Touch</a>
+                <a href="#projects" class="button secondary">View My Work</a>
+            </div>
+        </div>
+        <div class="hero-image">
+            <!-- You can add a professional photo here -->
+            <div class="photo-placeholder"></div>
+        </div>
+    </header>
+
+    <!-- About Section -->
+    <section id="about" class="section about">
+        <div class="section-content">
+            <h2 class="section-title">About Me</h2>
+            
+            <!-- Single column About text -->
+            <div class="about-text">
+                <p class="large">Accomplished Software Engineer with over 10 years of extensive experience in designing, building, and leading mobile application projects.</p>
+                <p>Passionate about exploring and integrating new technologies. Expert in iOS and cross-platform application development, proficient in Swift, SwiftUI, UIKit, Objective-C, and Flutter. Currently leading and mentoring teams in both iOS and Flutter development.</p>
+                <p>Successfully spearheaded a complex integration project, seamlessly merging a legacy Android app with a modern Flutter codebase, resulting in improved performance, reduced redundancy, and enhanced user experience.</p>
+            </div>
+            
+            <!-- Two column layout for Education and Skills -->
+            <div class="about-grid">
+                <!-- Education column -->
+                <div class="education-container">
+                    <h3 class="section-subtitle">Education</h3>
+                    <div class="education-item">
+                        <h4>Dual Degree (B.Tech + M.Tech) in Computer Science</h4>
+                        <p class="education-institution">Indian Institute of Technology (IIT) Roorkee</p>
+                        <p class="education-description">Focused on Computer Science fundamentals, software engineering principles, and advanced computing concepts.</p>
+                    </div>
+                    <div class="education-item">
+                        <h4>Certifications</h4>
+                        <ul>
+                            <li>Information Security and Ethical Hacking</li>
+                            <li>iOS App Development: Essential</li>
+                            <li>iOS Development: Architecture</li>
+                            <li>Practical Design Patterns in Swift</li>
+                        </ul>
+                    </div>
+                    <div class="education-item">
+                        <h4>Publications</h4>
+                        <ul>
+                            <li>Detection of Repackaged Smartphone Applications On Android</li>
+                            <li>Behaviour-analysis-of-machine-learning-algorithms</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Skills column -->
+                <div class="skills-container">
+                    <h3 class="section-subtitle">Technical Skills</h3>
+                    <div class="skills-grid">
+                        <div class="skill-category">
+                            <h4>Mobile Development</h4>
+                            <ul>
+                                <li>Swift (Expert)</li>
+                                <li>Flutter & Dart (Advanced)</li>
+                                <li>Objective-C (Intermediate)</li>
+                                <li>Kotlin (Intermediate)</li>
+                                <li>UIKit</li>
+                                <li>SwiftUI</li>
+                            </ul>
+                        </div>
+                        <div class="skill-category">
+                            <h4>Languages & Technologies</h4>
+                            <ul>
+                                <li>Java (Intermediate)</li>
+                                <li>C/C++ (Intermediate)</li>
+                                <li>JavaScript (Beginner)</li>
+                                <li>HTML/CSS (Beginner)</li>
+                                <li>Realm Database</li>
+                                <li>Git</li>
+                            </ul>
+                        </div>
+                        <div class="skill-category">
+                            <h4>Development Practices</h4>
+                            <ul>
+                                <li>Architecture Design</li>
+                                <li>Team Leadership</li>
+                                <li>Dependency Injection</li>
+                                <li>Modular Code Design</li>
+                                <li>MVVM</li>
+                                <li>Reactive Programming (RxSwift)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="projects">
+    <div class="section-header">
+        <h2>Featured Projects</h2>
+    </div>
+    <div class="project-grid">
+        <!-- SplashLearn Learning Platform -->
+        <div class="project-card">
+            <div class="project-header">
+                <h3>SplashLearn Learning Platform</h3>
+                <div class="tech-stack">
+                    <span>Flutter</span>
+                    <span>Dart</span>
+                    <span>REST API</span>
+                    <span>Cloud Services</span>
+                </div>
+            </div>
+            <p>Lead the development of SplashLearn's cross-platform learning platform, focusing on educational content delivery and student engagement.</p>
+            <div class="project-details">
+                <h4>Key Features</h4>
+                <ul>
+                    <li>Interactive educational content delivery</li>
+                    <li>Real-time progress tracking</li>
+                    <li>Multi-language support</li>
+                    <li>Offline learning capabilities</li>
+                </ul>
+                <div class="project-links">
+                    <a href="https://apps.apple.com/us/app/splash-math-k-5-learning-games/id672658928" class="btn" target="_blank">
+                        <i class="fab fa-apple"></i> App Store
+                    </a>
+                    <a href="https://www.splashlearn.com" class="btn" target="_blank">
+                        <i class="fas fa-globe"></i> Website
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Teacher Dashboard -->
+        <div class="project-card">
+            <div class="project-header">
+                <h3>Teacher Dashboard</h3>
+                <div class="tech-stack">
+                    <span>Flutter</span>
+                    <span>Firestore</span>
+                    <span>Analytics</span>
+                    <span>Push Notifications</span>
+                </div>
+            </div>
+            <p>Developed a comprehensive teacher dashboard for monitoring student progress and managing classroom activities.</p>
+            <div class="project-details">
+                <h4>Key Features</h4>
+                <ul>
+                    <li>Real-time student progress tracking</li>
+                    <li>Classroom management tools</li>
+                    <li>Custom analytics dashboard</li>
+                    <li>Push notification system</li>
+                </ul>
+                <div class="project-links">
+                    <a href="https://www.splashlearn.com/teachers" class="btn" target="_blank">
+                        <i class="fas fa-globe"></i> Website
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Parent Portal -->
+        <div class="project-card">
+            <div class="project-header">
+                <h3>Parent Portal</h3>
+                <div class="tech-stack">
+                    <span>Flutter</span>
+                    <span>Cloud Storage</span>
+                    <span>Authentication</span>
+                    <span>Push Notifications</span>
+                </div>
+            </div>
+            <p>Created a parent portal for monitoring child's learning progress and receiving educational insights.</p>
+            <div class="project-details">
+                <h4>Key Features</h4>
+                <ul>
+                    <li>Child progress monitoring</li>
+                    <li>Learning analytics</li>
+                    <li>Parent-teacher communication</li>
+                    <li>Push notification system</li>
+                </ul>
+                <div class="project-links">
+                    <a href="https://www.splashlearn.com/parents" class="btn" target="_blank">
+                        <i class="fas fa-globe"></i> Website
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Citibank Mobile Banking -->
+        <div class="project-card">
+            <div class="project-header">
+                <h3>Citibank Mobile Banking</h3>
+                <div class="tech-stack">
+                    <span>Swift</span>
+                    <span>Objective-C</span>
+                    <span>Security</span>
+                    <span>Biometrics</span>
+                </div>
+            </div>
+            <p>Developed secure mobile banking applications for Citibank, focusing on financial transactions and user security.</p>
+            <div class="project-details">
+                <h4>Key Features</h4>
+                <ul>
+                    <li>Secure transaction processing</li>
+                    <li>Biometric authentication</li>
+                    <li>Real-time balance updates</li>
+                    <li>Bill payment system</li>
+                </ul>
+                <div class="project-links">
+                    <a href="https://apps.apple.com/us/app/citibank-mobile/id301724680" class="btn" target="_blank">
+                        <i class="fab fa-apple"></i> App Store
+                    </a>
+                    <a href="https://www.citibank.com" class="btn" target="_blank">
+                        <i class="fas fa-globe"></i> Website
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Wealth Management App -->
+        <div class="project-card">
+            <div class="project-header">
+                <h3>Wealth Management App</h3>
+                <div class="tech-stack">
+                    <span>iOS</span>
+                    <span>Swift</span>
+                    <span>Charts</span>
+                    <span>Security</span>
+                </div>
+            </div>
+            <p>Developed a wealth management application for high-net-worth clients at Citibank.</p>
+            <div class="project-details">
+                <h4>Key Features</h4>
+                <ul>
+                    <li>Portfolio visualization</li>
+                    <li>Investment tracking</li>
+                    <li>Market data integration</li>
+                    <li>Secure document sharing</li>
+                </ul>
+                <div class="project-links">
+                    <a href="https://apps.apple.com/us/app/citi-mobile-snapshot/id1254293451" class="btn" target="_blank">
+                        <i class="fab fa-apple"></i> App Store
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Enterprise Mobile Framework -->
+        <div class="project-card">
+            <div class="project-header">
+                <h3>Enterprise Mobile Framework</h3>
+                <div class="tech-stack">
+                    <span>iOS</span>
+                    <span>Swift</span>
+                    <span>Objective-C</span>
+                    <span>CI/CD</span>
+                </div>
+            </div>
+            <p>Developed a reusable mobile framework for enterprise applications at Infosys.</p>
+            <div class="project-details">
+                <h4>Key Features</h4>
+                <ul>
+                    <li>Custom UI components</li>
+                    <li>Network layer abstraction</li>
+                    <li>Offline support</li>
+                    <li>Automated testing</li>
+                </ul>
+                <!-- No public links for internal framework -->
+            </div>
+        </div>
+
+        <!-- Field Service Application -->
+        <div class="project-card">
+            <div class="project-header">
+                <h3>Field Service Application</h3>
+                <div class="tech-stack">
+                    <span>iOS</span>
+                    <span>Swift</span>
+                    <span>Core Data</span>
+                    <span>Maps</span>
+                </div>
+            </div>
+            <p>Created a field service application for enterprise clients to manage on-site operations.</p>
+            <div class="project-details">
+                <h4>Key Features</h4>
+                <ul>
+                    <li>Offline data sync</li>
+                    <li>Route optimization</li>
+                    <li>Digital forms</li>
+                    <li>Photo documentation</li>
+                </ul>
+                <!-- No public links for internal application -->
+            </div>
+        </div>
+
+        <!-- Utopia Social Platform -->
+        <div class="project-card">
+            <div class="project-header">
+                <h3>Utopia Social Platform</h3>
+                <div class="tech-stack">
+                    <span>iOS</span>
+                    <span>Swift</span>
+                    <span>Firebase</span>
+                    <span>WebRTC</span>
+                </div>
+            </div>
+            <p>Developed a social networking platform with real-time communication features at Utopia Innovations.</p>
+            <div class="project-details">
+                <h4>Key Features</h4>
+                <ul>
+                    <li>Real-time chat</li>
+                    <li>Video calling</li>
+                    <li>Event management</li>
+                    <li>Social feed</li>
+                </ul>
+                <div class="project-links">
+                    <a href="https://utopiasocial.com/" class="btn" target="_blank">
+                        <i class="fas fa-globe"></i> Website
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Legacy Android to Flutter Integration -->
+        <div class="project-card">
+            <div class="project-header">
+                <h3>Legacy Android to Flutter Integration</h3>
+                <div class="tech-stack">
+                    <span>Flutter</span>
+                    <span>Dart</span>
+                    <span>Android</span>
+                    <span>Java</span>
+                </div>
+            </div>
+            <p>Spearheaded the integration of a legacy Android app with a modern Flutter codebase, resulting in improved performance and enhanced user experience. Implemented seamless data migration and feature parity across platforms.</p>
+            <div class="project-details">
+                <h4>Key Features</h4>
+                <ul>
+                    <li>Seamless integration of legacy Android code with Flutter</li>
+                    <li>Performance optimization across platforms</li>
+                    <li>Unified UI/UX across Android and Flutter</li>
+                    <li>Efficient data migration strategy</li>
+                </ul>
+                <!-- No public links for internal project -->
+            </div>
+        </div>
+    </div>
+</section>
+
+    <!-- Experience Section -->
+    <section id="experience" class="section experience">
+        <div class="section-content">
+            <h2 class="section-title">Work Experience</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-header">
+                            <h3>Tech Lead</h3>
+                            <span class="timeline-date">Present</span>
+                        </div>
+                        <h4>SplashLearn · Full-time</h4>
+                        <ul class="timeline-details">
+                            <li>Leading and mentoring teams in both iOS and Flutter development</li>
+                            <li>Successfully spearheaded a complex integration project, merging a legacy Android app with a modern Flutter codebase</li>
+                            <li>Implemented architecture improvements resulting in improved performance, reduced redundancy, and enhanced user experience</li>
+                            <li>Directing the development of educational technology solutions that serve millions of students worldwide</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-header">
+                            <h3>Mobile Developer</h3>
+                            <span class="timeline-date">2017 - 2021</span>
+                        </div>
+                        <h4>Citibank · Full-time</h4>
+                        <ul class="timeline-details">
+                            <li>Developed secure mobile banking applications focusing on financial transactions and user security</li>
+                            <li>Implemented biometric authentication, real-time balance updates, and bill payment systems</li>
+                            <li>Created a wealth management application for high-net-worth clients with portfolio visualization and market data integration</li>
+                            <li>Collaborated with cross-functional teams to ensure security compliance and optimal performance</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-header">
+                            <h3>Tech Lead, iOS Developer</h3>
+                            <span class="timeline-date">July 2016 - December 2017</span>
+                        </div>
+                        <h4>Utopia Innovations · Full-time</h4>
+                        <ul class="timeline-details">
+                            <li>Developed a social networking platform with real-time communication features</li>
+                            <li>Implemented video calling, event management, and social feed features</li>
+                            <li>Led the iOS development team and established architecture patterns</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-header">
+                            <h3>Software Engineer</h3>
+                            <span class="timeline-date">Earlier Positions</span>
+                        </div>
+                        <h4>Infosys · Full-time</h4>
+                        <ul class="timeline-details">
+                            <li>Developed enterprise mobile applications and frameworks</li>
+                            <li>Created reusable components for enterprise clients</li>
+                            <li>Implemented field service applications with offline data sync capabilities</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="section contact">
+        <div class="section-content">
+            <h2 class="section-title">Get In Touch</h2>
+            <div class="contact-grid">
+                <div class="contact-text">
+                    <h3>Let's Work Together</h3>
+                    <p>I'm currently open to new opportunities and interesting projects. Whether you have a question or just want to say hi, I'll do my best to get back to you!</p>
+                    <div class="contact-methods">
+                        <a href="mailto:ankushsingh@outlook.com" class="contact-link">
+                            <i class="fas fa-envelope"></i> ankushsingh@outlook.com
+                        </a>
+                        <a href="tel:+919952039801" class="contact-link">
+                            <i class="fas fa-phone"></i> +91 9952039801
+                        </a>
+                        <a href="#" class="contact-link">
+                            <i class="fas fa-map-marker-alt"></i> Saket, New Delhi
+                        </a>
+                        <div class="social-links">
+                            <a href="https://github.com/ankushkumarsingh" target="_blank" aria-label="GitHub" class="social-link">
+                                <i class="fab fa-github"></i>
+                            </a>
+                            <a href="https://linkedin.com/in/ankushsingh" target="_blank" aria-label="LinkedIn" class="social-link">
+                                <i class="fab fa-linkedin-in"></i>
+                            </a>
+                            <a href="https://twitter.com/ankushsinghiitr" target="_blank" aria-label="Twitter" class="social-link">
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <form class="contact-form" id="contactForm">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="subject">Subject</label>
+                        <input type="text" id="subject" name="subject" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" rows="5" required></textarea>
+                    </div>
+                    <button type="submit" class="button primary">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-logo">Ankush Kumar Singh</div>
+            <p class="footer-tagline">Tech Lead at SplashLearn. Problem Solver. Technology Enthusiast.</p>
+            <div class="footer-links">
+                <a href="#about">About</a>
+                <a href="#experience">Experience</a>
+                <a href="#projects">Projects</a>
+                <a href="#contact">Contact</a>
+            </div>
+            <div class="footer-social">
+                <a href="https://github.com/ankushkumarsingh" target="_blank" aria-label="GitHub">
+                    <i class="fab fa-github"></i>
+                </a>
+                <a href="https://linkedin.com/in/ankushsingh" target="_blank" aria-label="LinkedIn">
+                    <i class="fab fa-linkedin-in"></i>
+                </a>
+                <a href="https://twitter.com/ankushsinghiitr" target="_blank" aria-label="Twitter">
+                    <i class="fab fa-twitter"></i>
+                </a>
+            </div>
+            <p class="copyright">&copy; 2023 Ankush Kumar Singh. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
 </html>

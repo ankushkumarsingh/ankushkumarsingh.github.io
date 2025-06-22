@@ -4,8 +4,84 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Graph Visualization</title>
+    <title>Graph Visualization | Ankush Kumar Singh</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        /* Dropdown styles */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropbtn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #2d3748;
+            min-width: 200px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .dropdown-content a {
+            color: white;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            transition: background-color 0.3s;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #4a5568;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .dropdown:hover .dropbtn {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Info panel */
+        .info-panel {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            display: none;
+        }
+
+        .info-panel h3 {
+            margin-top: 0;
+            color: #bbdefb;
+        }
+
+        .complexity {
+            margin-top: 10px;
+            font-size: 0.9em;
+            color: #a0aec0;
+        }
+
+        .complexity span {
+            display: inline-block;
+            margin-right: 15px;
+        }
+
         body {
             font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
             margin: 0;
@@ -102,6 +178,30 @@
         }
     </style>
 </head>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-content">
+            <div class="logo">Ankush</div>
+            <ul class="nav-links">
+                <li><a href="index.html#about">About</a></li>
+                <li><a href="index.html#experience">Experience</a></li>
+                <li><a href="index.html#projects">Projects</a></li>
+                <li><a href="data-structures.html" class="active">Data Structures</a></li>
+                <li><a href="index.html#contact" class="button">Contact</a></li>
+            </ul>
+            <div class="menu-toggle">
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="back-link" style="margin: 20px 0 0 20px;">
+        <a href="data-structures.html" style="color: #fff; text-decoration: none; display: inline-flex; align-items: center;">
+            <i class="fas fa-arrow-left" style="margin-right: 8px;"></i> Back to Data Structures
+        </a>
+    </div>
+
 <body>
     <div class="container">
         <h1>Graph Data Structure Visualization</h1>
@@ -134,6 +234,44 @@
             <div class="info-row">
                 <span>Last Tour Length:</span>
                 <span id="tour-length">-</span>
+            </div>
+            <div class="controls">
+                <button id="add-node">Add Node</button>
+                <button id="add-edge">Add Edge</button>
+                <button id="set-start">Set Start Node</button>
+                <div class="dropdown">
+                    <button class="dropbtn">Algorithms <i class="fas fa-caret-down"></i></button>
+                    <div class="dropdown-content">
+                        <a href="#" id="run-dijkstra">Dijkstra's Algorithm</a>
+                        <a href="#" id="run-dfs">Depth-First Search</a>
+                        <a href="#" id="run-bfs">Breadth-First Search</a>
+                    </div>
+                </div>
+                <button id="reset">Reset</button>
+            </div>
+            <div id="algorithm-info" class="info-panel">
+                <h3>Dijkstra's Algorithm</h3>
+                <p>Finds the shortest paths from a start node to all other nodes in a weighted graph.</p>
+                <div class="complexity">
+                    <span>Time: O((V + E) log V)</span>
+                    <span>Space: O(V)</span>
+                </div>
+            </div>
+            <div class="info-panel">
+                <h3>Nodes:</h3>
+                <div class="info-item">
+                    <span>Nodes:</span>
+                    <span id="node-count">0</span>
+                </div>
+                <div class="info-item">
+                    <span>Edges:</span>
+                    <span id="edge-count">0</span>
+                </div>
+                <div class="info-item">
+                    <span>Start Node:</span>
+                    <span id="start-node">Not set</span>
+                </div>
+                <div id="path-info" class="path-info"></div>
             </div>
         </div>
         
@@ -173,6 +311,347 @@
             'C': {x: 550, y: 150},
             'D': {x: 450, y: 300},
             'E': {x: 250, y: 350}
+        };
+        
+        // Graph data for Dijkstra's algorithm
+        const dijkstraGraphData = {
+            nodes: [
+                { id: 'A', x: 100, y: 150 },
+                { id: 'B', x: 300, y: 100 },
+                { id: 'C', x: 500, y: 150 },
+                { id: 'D', x: 200, y: 300 },
+                { id: 'E', x: 400, y: 300 }
+            ],
+            edges: [
+                { from: 'A', to: 'B', weight: 4 },
+                { from: 'A', to: 'D', weight: 2 },
+                { from: 'B', to: 'C', weight: 3 },
+                { from: 'B', to: 'D', weight: 1 },
+                { from: 'C', to: 'E', weight: 5 },
+                { from: 'D', to: 'E', weight: 7 },
+                { from: 'A', to: 'E', weight: 10 }
+            ]
+        };
+        
+        let dijkstraGraph = {
+            nodes: [...dijkstraGraphData.nodes],
+            edges: [...dijkstraGraphData.edges]
+        };
+        
+        let dijkstraStartNode = null;
+        let isDijkstraVisualizing = false;
+        let animationSpeed = 1000; // ms between steps
+        let dijkstraCanvas, dijkstraCtx;
+        let previousPaths = {};
+        
+        // Initialize canvas
+        function initDijkstra() {
+            dijkstraCanvas = document.getElementById('graph-canvas');
+            dijkstraCtx = dijkstraCanvas.getContext('2d');
+            
+            // Set canvas size
+            dijkstraCanvas.width = dijkstraCanvas.offsetWidth;
+            dijkstraCanvas.height = 500;
+            
+            // Draw initial graph
+            drawDijkstraGraph();
+            
+            // Add event listeners
+            setupDijkstraEventListeners();
+        }
+        
+        function setupDijkstraEventListeners() {
+            // Algorithm buttons
+            document.getElementById('run-dijkstra').addEventListener('click', runDijkstra);
+            document.getElementById('set-start').addEventListener('click', setDijkstraStartNode);
+            document.getElementById('reset').addEventListener('click', resetDijkstraGraph);
+            
+            // Control buttons
+            document.getElementById('add-node').addEventListener('click', () => {
+                // Add node logic here
+                alert('Add node functionality coming soon!');
+            });
+            
+            document.getElementById('add-edge').addEventListener('click', () => {
+                // Add edge logic here
+                alert('Add edge functionality coming soon!');
+            });
+            
+            // Handle canvas clicks for setting start node
+            dijkstraCanvas.addEventListener('click', handleDijkstraCanvasClick);
+        }
+        
+        function handleDijkstraCanvasClick(event) {
+            if (!isDijkstraVisualizing) {
+                const rect = dijkstraCanvas.getBoundingClientRect();
+                const x = event.clientX - rect.left;
+                const y = event.clientY - rect.top;
+                
+                // Check if a node was clicked
+                const clickedNode = findDijkstraNodeAt(x, y);
+                if (clickedNode) {
+                    dijkstraStartNode = clickedNode.id;
+                    document.getElementById('start-node').textContent = dijkstraStartNode;
+                    drawDijkstraGraph();
+                }
+            }
+        }
+        
+        function findDijkstraNodeAt(x, y) {
+            const nodeRadius = 20;
+            for (const node of dijkstraGraph.nodes) {
+                const dx = node.x - x;
+                const dy = node.y - y;
+                if (Math.sqrt(dx * dx + dy * dy) <= nodeRadius) {
+                    return node;
+                }
+            }
+            return null;
+        }
+        
+        function setDijkstraStartNode() {
+            // This will be handled by the canvas click handler
+            alert('Click on a node to set it as the start node');
+        }
+        
+        function resetDijkstraGraph() {
+            // Reset to initial state
+            dijkstraGraph = {
+                nodes: [...dijkstraGraphData.nodes],
+                edges: [...dijkstraGraphData.edges]
+            };
+            dijkstraStartNode = null;
+            document.getElementById('start-node').textContent = 'Not set';
+            document.getElementById('path-info').innerHTML = '';
+            drawDijkstraGraph();
+        }
+        
+        async function runDijkstra() {
+            if (!dijkstraStartNode) {
+                alert('Please set a start node first');
+                return;
+            }
+            
+            isDijkstraVisualizing = true;
+            updateDijkstraButtons();
+            
+            const distances = {};
+            const previous = {};
+            const unvisited = new Set(dijkstraGraph.nodes.map(node => node.id));
+            
+            // Initialize distances
+            dijkstraGraph.nodes.forEach(node => {
+                distances[node.id] = node.id === dijkstraStartNode ? 0 : Infinity;
+                previous[node.id] = null;
+            });
+            
+            // Highlight start node
+            drawDijkstraGraph();
+            await sleep(animationSpeed);
+            
+            while (unvisited.size > 0) {
+                // Find node with smallest distance
+                let current = null;
+                let smallestDistance = Infinity;
+                
+                for (const nodeId of unvisited) {
+                    if (distances[nodeId] < smallestDistance) {
+                        smallestDistance = distances[nodeId];
+                        current = nodeId;
+                    }
+                }
+                
+                if (current === null || distances[current] === Infinity) break;
+                
+                // Mark as visited
+                unvisited.delete(current);
+                
+                // Get neighbors
+                const neighbors = dijkstraGraph.edges
+                    .filter(edge => edge.from === current || edge.to === current)
+                    .map(edge => ({
+                        node: edge.from === current ? edge.to : edge.from,
+                        weight: edge.weight,
+                        edge: edge
+                    }));
+                
+                // Update distances to neighbors
+                for (const neighbor of neighbors) {
+                    if (!unvisited.has(neighbor.node)) continue;
+                    
+                    const distance = distances[current] + neighbor.weight;
+                    if (distance < distances[neighbor.node]) {
+                        distances[neighbor.node] = distance;
+                        previous[neighbor.node] = current;
+                        
+                        // Visualize the edge being considered
+                        drawDijkstraGraph(true, neighbor.edge);
+                        await sleep(animationSpeed / 2);
+                    }
+                }
+                
+                // Update visualization
+                drawDijkstraGraph();
+                await sleep(animationSpeed);
+            }
+            
+            // Show shortest paths
+            await showDijkstraShortestPaths(previous, distances);
+            isDijkstraVisualizing = false;
+            updateDijkstraButtons();
+        }
+        
+        function drawDijkstraGraph(highlightEdge = null, edgeToHighlight = null) {
+            // Clear canvas
+            dijkstraCtx.clearRect(0, 0, dijkstraCanvas.width, dijkstraCanvas.height);
+            
+            // Draw edges
+            for (const edge of dijkstraGraph.edges) {
+                const fromNode = dijkstraGraph.nodes.find(n => n.id === edge.from);
+                const toNode = dijkstraGraph.nodes.find(n => n.id === edge.to);
+                
+                if (fromNode && toNode) {
+                    // Draw line
+                    dijkstraCtx.beginPath();
+                    dijkstraCtx.moveTo(fromNode.x, fromNode.y);
+                    dijkstraCtx.lineTo(toNode.x, toNode.y);
+                    
+                    // Style based on state
+                    if (edge === edgeToHighlight) {
+                        dijkstraCtx.strokeStyle = '#ffeb3b';
+                        dijkstraCtx.lineWidth = 4;
+                    } else if (isDijkstraEdgeInShortestPath(edge, previousPaths)) {
+                        dijkstraCtx.strokeStyle = '#4caf50';
+                        dijkstraCtx.lineWidth = 3;
+                    } else {
+                        dijkstraCtx.strokeStyle = '#666';
+                        dijkstraCtx.lineWidth = 2;
+                    }
+                    
+                    dijkstraCtx.stroke();
+                    
+                    // Draw weight
+                    const midX = (fromNode.x + toNode.x) / 2;
+                    const midY = (fromNode.y + toNode.y) / 2;
+                    
+                    dijkstraCtx.fillStyle = '#333';
+                    dijkstraCtx.fillRect(midX - 15, midY - 10, 30, 20);
+                    dijkstraCtx.fillStyle = 'white';
+                    dijkstraCtx.textAlign = 'center';
+                    dijkstraCtx.textBaseline = 'middle';
+                    dijkstraCtx.fillText(edge.weight, midX, midY);
+                }
+            }
+            
+            // Draw nodes
+            for (const node of dijkstraGraph.nodes) {
+                // Draw node
+                dijkstraCtx.beginPath();
+                dijkstraCtx.arc(node.x, node.y, 20, 0, Math.PI * 2);
+                
+                // Style based on state
+                if (node.id === dijkstraStartNode) {
+                    dijkstraCtx.fillStyle = '#4caf50'; // Start node
+                } else if (previousPaths && previousPaths[node.id] !== undefined) {
+                    dijkstraCtx.fillStyle = '#2196f3'; // Visited node
+                } else {
+                    dijkstraCtx.fillStyle = '#9e9e9e'; // Unvisited node
+                }
+                
+                dijkstraCtx.fill();
+                dijkstraCtx.strokeStyle = '#333';
+                dijkstraCtx.lineWidth = 2;
+                dijkstraCtx.stroke();
+                
+                // Draw node label
+                dijkstraCtx.fillStyle = 'white';
+                dijkstraCtx.textAlign = 'center';
+                dijkstraCtx.textBaseline = 'middle';
+                dijkstraCtx.font = 'bold 14px Arial';
+                dijkstraCtx.fillText(node.id, node.x, node.y);
+            }
+        }
+        
+        function isDijkstraEdgeInShortestPath(edge, previous) {
+            if (!previous) return false;
+            return (previous[edge.to] === edge.from) || (previous[edge.from] === edge.to);
+        }
+        
+        async function showDijkstraShortestPaths(previous, distances) {
+            const pathInfo = document.getElementById('path-info');
+            pathInfo.innerHTML = '<h3>Shortest Paths from Node ' + dijkstraStartNode + ':</h3>';
+            
+            // Store previous paths for highlighting
+            previousPaths = { ...previous };
+            
+            for (const node of dijkstraGraph.nodes) {
+                if (node.id === dijkstraStartNode) continue;
+                
+                const path = [];
+                let current = node.id;
+                
+                while (current !== null) {
+                    path.unshift(current);
+                    current = previous[current];
+                }
+                
+                if (path.length > 1) {
+                    const pathText = path.join(' → ');
+                    const pathElement = document.createElement('div');
+                    pathElement.className = 'path-item';
+                    pathElement.innerHTML = `
+                        <span class="node-label">To Node ${node.id}:</span>
+                        <span class="distance">${distances[node.id]}</span>
+                        <span class="path">${pathText}</span>
+                    `;
+                    pathInfo.appendChild(pathElement);
+                }
+            }
+            
+            // Redraw with highlighted paths
+            drawDijkstraGraph();
+        }
+        
+        function sleep(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+        
+        function updateDijkstraButtons() {
+            const buttons = document.querySelectorAll('button');
+            buttons.forEach(btn => {
+                if (btn.id !== 'reset') {
+                    btn.disabled = isDijkstraVisualizing;
+                }
+            });
+        }
+        
+        // ============================================
+        // VARIANT 2 - YOUR IMPLEMENTATION GOES HERE
+        // ============================================
+        // This is a placeholder for your implementation.
+        // You can modify the code below as needed.
+        
+        // Example structure (you can remove this):
+        function myVariant2Implementation() {
+            // Your implementation here
+            console.log('Variant 2 implementation');
+            
+            // You can use the existing graph data structures:
+            // - dijkstraGraph.nodes
+            // - dijkstraGraph.edges
+            // 
+            // And the existing canvas context:
+            // - dijkstraCtx
+            
+            // Add your algorithm logic here
+        }
+        
+        // Initialize when the page loads - you can change this to your variant
+        window.onload = function() {
+            initDijkstra();  // Keep the original initialization
+            
+            // Add your variant 2 initialization here if needed
+            // myVariant2Implementation();
         };
         
         function createUndirectedGraph() {
@@ -468,6 +947,21 @@
         
         // Initialize with undirected graph
         createUndirectedGraph();
+    </script>
+    <script>
+        // Mobile menu toggle
+        document.querySelector('.menu-toggle')?.addEventListener('click', function() {
+            document.querySelector('.nav-links').classList.toggle('active');
+        });
+        
+        // Update active link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            if (link.href === window.location.href) {
+                link.classList.add('active');
+            } else {
+                link.classList.remove('active');
+            }
+        });
     </script>
 </body>
 </html>

@@ -17,7 +17,7 @@
                 <li><a href="#about">About</a></li>
                 <li><a href="#experience">Experience</a></li>
                 <li><a href="#projects">Projects</a></li>
-                <li><a href="graph.html">Graph</a></li>
+                <li><a href="data-structures.html">Data Structures</a></li>
                 <li><a href="#contact" class="button">Contact</a></li>
             </ul>
             <div class="menu-toggle">
@@ -538,6 +538,23 @@
                     behavior: 'smooth'
                 });
             });
+        });
+
+        // Mobile menu toggle
+        document.querySelector('.menu-toggle').addEventListener('click', function() {
+            document.querySelector('.nav-links').classList.toggle('active');
+        });
+
+        // Update active link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            if (link.href === window.location.href || 
+                (link.getAttribute('href').startsWith('#') && 
+                 window.location.pathname === '/index.html' || 
+                 window.location.pathname === '/')) {
+                link.classList.add('active');
+            } else {
+                link.classList.remove('active');
+            }
         });
     </script>
 </body>

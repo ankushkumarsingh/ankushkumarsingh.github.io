@@ -1,0 +1,473 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Graph Visualization</title>
+    <style>
+        body {
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: white;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-weight: 300;
+            font-size: 2.5em;
+        }
+        
+        .controls {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        button {
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+        
+        button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+        
+        button.active {
+            background: rgba(255, 255, 255, 0.4);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        #canvas {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            display: block;
+            margin: 0 auto;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        .info-panel {
+            margin-top: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-family: 'SF Mono', Monaco, monospace;
+        }
+        
+        .demo-section {
+            margin-top: 30px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .tour-display {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 15px;
+            font-family: 'SF Mono', Monaco, monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Graph Data Structure Visualization</h1>
+        
+        <div class="controls">
+            <button onclick="createUndirectedGraph()" class="active" id="undirected-btn">Undirected Graph</button>
+            <button onclick="createDirectedGraph()" id="directed-btn">Directed Graph</button>
+            <button onclick="demonstrateTour()">Calculate Tour</button>
+            <button onclick="addRandomEdge()">Add Random Edge</button>
+            <button onclick="removeRandomEdge()">Remove Random Edge</button>
+            <button onclick="clearGraph()">Clear Graph</button>
+        </div>
+        
+        <canvas id="canvas" width="800" height="500"></canvas>
+        
+        <div class="info-panel">
+            <h3>Graph Information</h3>
+            <div class="info-row">
+                <span>Vertices:</span>
+                <span id="vertex-count">0</span>
+            </div>
+            <div class="info-row">
+                <span>Edges:</span>
+                <span id="edge-count">0</span>
+            </div>
+            <div class="info-row">
+                <span>Type:</span>
+                <span id="graph-type">Undirected</span>
+            </div>
+            <div class="info-row">
+                <span>Last Tour Length:</span>
+                <span id="tour-length">-</span>
+            </div>
+        </div>
+        
+        <div class="demo-section">
+            <h3>Python Graph Class Demonstration</h3>
+            <p>This visualization demonstrates the Graph class functionality:</p>
+            <ul>
+                <li><strong>add_vertex()</strong> & <strong>add_edge()</strong>: Click buttons to see vertices and weighted edges</li>
+                <li><strong>Weighted edges</strong>: Numbers on edges show weights (distances/costs)</li>
+                <li><strong>tour_length()</strong>: Click "Calculate Tour" to see total path cost</li>
+                <li><strong>Directed vs Undirected</strong>: Toggle to see how edge directions change</li>
+            </ul>
+            
+            <div class="tour-display" id="tour-info">
+                Click "Calculate Tour" to see tour calculation in action
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        
+        let graph = {
+            vertices: {},
+            directed: false,
+            edges: []
+        };
+        
+        let lastTour = [];
+        let tourLength = 0;
+        
+        // Sample vertices with positions
+        const vertexPositions = {
+            'A': {x: 150, y: 150},
+            'B': {x: 350, y: 100},
+            'C': {x: 550, y: 150},
+            'D': {x: 450, y: 300},
+            'E': {x: 250, y: 350}
+        };
+        
+        function createUndirectedGraph() {
+            graph = {
+                vertices: {'A': {}, 'B': {}, 'C': {}, 'D': {}, 'E': {}},
+                directed: false,
+                edges: [
+                    {src: 'A', dest: 'B', weight: 5},
+                    {src: 'B', dest: 'C', weight: 3},
+                    {src: 'C', dest: 'D', weight: 4},
+                    {src: 'D', dest: 'E', weight: 2},
+                    {src: 'E', dest: 'A', weight: 6},
+                    {src: 'A', dest: 'C', weight: 8},
+                    {src: 'B', dest: 'D', weight: 7}
+                ]
+            };
+            
+            // Build adjacency representation
+            buildAdjacencyList();
+            updateButtons('undirected');
+            updateInfo();
+            draw();
+        }
+        
+        function createDirectedGraph() {
+            graph = {
+                vertices: {'A': {}, 'B': {}, 'C': {}, 'D': {}, 'E': {}},
+                directed: true,
+                edges: [
+                    {src: 'A', dest: 'B', weight: 5},
+                    {src: 'B', dest: 'C', weight: 3},
+                    {src: 'C', dest: 'D', weight: 4},
+                    {src: 'D', dest: 'A', weight: 9},
+                    {src: 'A', dest: 'E', weight: 6},
+                    {src: 'E', dest: 'C', weight: 2},
+                    {src: 'B', dest: 'D', weight: 7}
+                ]
+            };
+            
+            buildAdjacencyList();
+            updateButtons('directed');
+            updateInfo();
+            draw();
+        }
+        
+        function buildAdjacencyList() {
+            // Reset all vertices
+            Object.keys(graph.vertices).forEach(v => {
+                graph.vertices[v] = {};
+            });
+            
+            // Add edges to adjacency list
+            graph.edges.forEach(edge => {
+                graph.vertices[edge.src][edge.dest] = edge.weight;
+                if (!graph.directed) {
+                    graph.vertices[edge.dest][edge.src] = edge.weight;
+                }
+            });
+        }
+        
+        function demonstrateTour() {
+            const vertices = Object.keys(graph.vertices);
+            if (vertices.length < 3) return;
+            
+            // Create a simple tour through all vertices
+            lastTour = vertices.slice(0, Math.min(4, vertices.length));
+            tourLength = calculateTourLength(lastTour);
+            
+            updateTourDisplay();
+            updateInfo();
+            draw();
+        }
+        
+        function calculateTourLength(tour) {
+            let total = 0;
+            for (let i = 0; i < tour.length; i++) {
+                const current = tour[i];
+                const next = tour[(i + 1) % tour.length];
+                const weight = getEdgeWeight(current, next);
+                if (weight === Infinity) return Infinity;
+                total += weight;
+            }
+            return total;
+        }
+        
+        function getEdgeWeight(src, dest) {
+            return graph.vertices[src] && graph.vertices[src][dest] 
+                ? graph.vertices[src][dest] 
+                : Infinity;
+        }
+        
+        function addRandomEdge() {
+            const vertices = Object.keys(graph.vertices);
+            if (vertices.length < 2) return;
+            
+            const src = vertices[Math.floor(Math.random() * vertices.length)];
+            let dest = vertices[Math.floor(Math.random() * vertices.length)];
+            while (dest === src) {
+                dest = vertices[Math.floor(Math.random() * vertices.length)];
+            }
+            
+            // Check if edge already exists
+            const exists = graph.edges.some(e => 
+                (e.src === src && e.dest === dest) || 
+                (!graph.directed && e.src === dest && e.dest === src)
+            );
+            
+            if (!exists) {
+                const weight = Math.floor(Math.random() * 10) + 1;
+                graph.edges.push({src, dest, weight});
+                buildAdjacencyList();
+                updateInfo();
+                draw();
+            }
+        }
+        
+        function removeRandomEdge() {
+            if (graph.edges.length === 0) return;
+            
+            const index = Math.floor(Math.random() * graph.edges.length);
+            graph.edges.splice(index, 1);
+            buildAdjacencyList();
+            updateInfo();
+            draw();
+        }
+        
+        function clearGraph() {
+            graph.edges = [];
+            buildAdjacencyList();
+            lastTour = [];
+            tourLength = 0;
+            updateInfo();
+            updateTourDisplay();
+            draw();
+        }
+        
+        function updateButtons(active) {
+            document.querySelectorAll('button').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(active + '-btn').classList.add('active');
+        }
+        
+        function updateInfo() {
+            document.getElementById('vertex-count').textContent = Object.keys(graph.vertices).length;
+            document.getElementById('edge-count').textContent = graph.edges.length;
+            document.getElementById('graph-type').textContent = graph.directed ? 'Directed' : 'Undirected';
+            document.getElementById('tour-length').textContent = 
+                tourLength === Infinity ? '∞ (invalid)' : 
+                tourLength === 0 ? '-' : tourLength;
+        }
+        
+        function updateTourDisplay() {
+            const tourInfo = document.getElementById('tour-info');
+            if (lastTour.length === 0) {
+                tourInfo.textContent = 'Click "Calculate Tour" to see tour calculation in action';
+                return;
+            }
+            
+            let display = `Tour: [${lastTour.join(', ')}]\n`;
+            display += `Calculation:\n`;
+            
+            for (let i = 0; i < lastTour.length; i++) {
+                const current = lastTour[i];
+                const next = lastTour[(i + 1) % lastTour.length];
+                const weight = getEdgeWeight(current, next);
+                display += `  ${current} → ${next}: ${weight === Infinity ? '∞' : weight}\n`;
+            }
+            
+            display += `Total Length: ${tourLength === Infinity ? '∞ (invalid tour)' : tourLength}`;
+            tourInfo.textContent = display;
+        }
+        
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // Draw edges
+            graph.edges.forEach(edge => {
+                drawEdge(edge.src, edge.dest, edge.weight);
+            });
+            
+            // Draw vertices
+            Object.keys(graph.vertices).forEach(vertex => {
+                drawVertex(vertex);
+            });
+            
+            // Highlight tour if exists
+            if (lastTour.length > 0) {
+                drawTour();
+            }
+        }
+        
+        function drawEdge(src, dest, weight) {
+            const srcPos = vertexPositions[src];
+            const destPos = vertexPositions[dest];
+            
+            if (!srcPos || !destPos) return;
+            
+            ctx.strokeStyle = '#333';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(srcPos.x, srcPos.y);
+            ctx.lineTo(destPos.x, destPos.y);
+            ctx.stroke();
+            
+            // Draw weight
+            const midX = (srcPos.x + destPos.x) / 2;
+            const midY = (srcPos.y + destPos.y) / 2;
+            
+            ctx.fillStyle = '#fff';
+            ctx.fillRect(midX - 12, midY - 10, 24, 20);
+            ctx.fillStyle = '#333';
+            ctx.font = '12px SF Mono, monospace';
+            ctx.textAlign = 'center';
+            ctx.fillText(weight, midX, midY + 4);
+            
+            // Draw arrow for directed graph
+            if (graph.directed) {
+                drawArrow(srcPos, destPos);
+            }
+        }
+        
+        function drawArrow(from, to) {
+            const angle = Math.atan2(to.y - from.y, to.x - from.x);
+            const arrowLength = 15;
+            const arrowAngle = Math.PI / 6;
+            
+            // Position arrow near destination vertex
+            const arrowX = to.x - Math.cos(angle) * 30;
+            const arrowY = to.y - Math.sin(angle) * 30;
+            
+            ctx.strokeStyle = '#333';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            
+            // Arrow head
+            ctx.moveTo(arrowX, arrowY);
+            ctx.lineTo(
+                arrowX - arrowLength * Math.cos(angle - arrowAngle),
+                arrowY - arrowLength * Math.sin(angle - arrowAngle)
+            );
+            ctx.moveTo(arrowX, arrowY);
+            ctx.lineTo(
+                arrowX - arrowLength * Math.cos(angle + arrowAngle),
+                arrowY - arrowLength * Math.sin(angle + arrowAngle)
+            );
+            
+            ctx.stroke();
+        }
+        
+        function drawVertex(vertex) {
+            const pos = vertexPositions[vertex];
+            if (!pos) return;
+            
+            const isInTour = lastTour.includes(vertex);
+            
+            ctx.fillStyle = isInTour ? '#ff6b6b' : '#4ecdc4';
+            ctx.strokeStyle = '#333';
+            ctx.lineWidth = 3;
+            
+            ctx.beginPath();
+            ctx.arc(pos.x, pos.y, 25, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.stroke();
+            
+            ctx.fillStyle = '#fff';
+            ctx.font = 'bold 16px SF Pro Display, sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText(vertex, pos.x, pos.y + 6);
+        }
+        
+        function drawTour() {
+            if (lastTour.length < 2) return;
+            
+            ctx.strokeStyle = '#ff6b6b';
+            ctx.lineWidth = 4;
+            ctx.setLineDash([5, 5]);
+            
+            for (let i = 0; i < lastTour.length; i++) {
+                const current = lastTour[i];
+                const next = lastTour[(i + 1) % lastTour.length];
+                const currentPos = vertexPositions[current];
+                const nextPos = vertexPositions[next];
+                
+                if (currentPos && nextPos) {
+                    ctx.beginPath();
+                    ctx.moveTo(currentPos.x, currentPos.y);
+                    ctx.lineTo(nextPos.x, nextPos.y);
+                    ctx.stroke();
+                }
+            }
+            
+            ctx.setLineDash([]);
+        }
+        
+        // Initialize with undirected graph
+        createUndirectedGraph();
+    </script>
+</body>
+</html>

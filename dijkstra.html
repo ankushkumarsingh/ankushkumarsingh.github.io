@@ -22,21 +22,38 @@
             margin: 0 auto;
             padding: 20px;
         }
+        .container > h1 {
+            margin-top: 40px;
+        }
+        .container > h1 + p {
+            padding-top: 32px;
+        }
 
         .back-link {
-            margin: 20px 0;
+            margin: 80px 0 20px 0;
+            padding-left: 8px;
+            position: relative;
+            z-index: 200;
         }
 
         .back-link a {
             color: #bbdefb;
-            text-decoration: none;
+            background: none;
+            border: none;
+            box-shadow: none;
+            text-decoration: underline;
+            font-size: 1.1em;
+            font-weight: 500;
+            padding: 0;
+            margin: 0;
             display: inline-flex;
             align-items: center;
-            transition: color 0.3s;
+            transition: color 0.2s;
         }
 
         .back-link a:hover {
             color: #fff;
+            text-decoration: underline;
         }
 
         .back-link i {
